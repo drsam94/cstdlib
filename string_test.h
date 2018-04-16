@@ -167,3 +167,53 @@ TEST(strTest, strcat2) {
     EXPECT_EQ(dst2, sd::strncat(dst2, "World", 0));
     EXPECT_STREQ(dst, dst2);
 }
+namespace {
+inline int sign(int x) {
+    if (x < 0) {
+        return -1;
+    } else if (x > 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+}
+
+#define EXPECT_SIGN(x, y) EXPECT_EQ(sign(x), sign(y))
+TEST(strTest, strcmp1) {
+    EXPECT_SIGN(::strcmp("Hello", "World"), sd::strcmp("Hello", "World"));
+    EXPECT_SIGN(::strcmp("Hello", "Hel"), sd::strcmp("Hello", "Hel"));
+    EXPECT_SIGN(::strcmp("Wor", "World"), sd::strcmp("Wor", "World"));
+    EXPECT_SIGN(::strcmp("abc", "abd"), sd::strcmp("abc", "abd"));
+    EXPECT_SIGN(::strcmp("", ""), sd::strcmp("", ""));
+    EXPECT_SIGN(::strcmp("", "abc"), sd::strcmp("", "abc"));
+    EXPECT_SIGN(::strcmp("abc", ""), sd::strcmp("abc", ""));
+}
+
+TEST(strTest, strncmp1) {
+    EXPECT_SIGN(::strncmp("Hello", "World", 5),
+                sd::strncmp("Hello", "World", 5));
+    EXPECT_SIGN(::strncmp("Hello", "World", 6),
+                sd::strncmp("Hello", "World", 6));
+    EXPECT_SIGN(::strncmp("Hello", "Hel", 5), sd::strncmp("Hello", "Hel", 5));
+    EXPECT_SIGN(::strncmp("Wor", "World", 5), sd::strncmp("Wor", "World", 5));
+    EXPECT_SIGN(::strncmp("abc", "abd", 3), sd::strncmp("abc", "abd", 3));
+    EXPECT_SIGN(::strncmp("", "", 0), sd::strncmp("", "", 0));
+    EXPECT_SIGN(::strncmp("", "", 1), sd::strncmp("", "", 1));
+    EXPECT_SIGN(::strncmp("", "abc", 3), sd::strncmp("", "abc", 3));
+    EXPECT_SIGN(::strncmp("abc", "", 3), sd::strncmp("abc", "", 3));
+}
+
+TEST(strTest, strncmp2) {
+    EXPECT_SIGN(::strncmp("Hello", "World", 2),
+                sd::strncmp("Hello", "World", 2));
+    EXPECT_SIGN(::strncmp("Hello", "World", 1),
+                sd::strncmp("Hello", "World", 1));
+    EXPECT_SIGN(::strncmp("Hello", "Hel", 3), sd::strncmp("Hello", "Hel", 3));
+    EXPECT_SIGN(::strncmp("Hello", "Hel", 4), sd::strncmp("Hello", "Hel", 4));
+    EXPECT_SIGN(::strncmp("Wor", "World", 3), sd::strncmp("Wor", "World", 3));
+    EXPECT_SIGN(::strncmp("abc", "abd", 2), sd::strncmp("abc", "abd", 2));
+    EXPECT_SIGN(::strncmp("", "abc", 0), sd::strncmp("", "abc", 0));
+}
+
+#undef EXPECT_SIGN
