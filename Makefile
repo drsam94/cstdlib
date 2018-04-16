@@ -23,8 +23,9 @@ OBJS = $(OBJDIR)/string.o
 
 all: gtest debug
 
-# This second expansion directive is necessary in order to get the change of variant
-# to apply in the expansion of OBJS
+#This second expansion directive is necessary in order to get the change of    \
+    variant
+#to apply in the expansion of OBJS
 .SECONDEXPANSION:
 release: OPT = 3
 release: $$(OBJS)
@@ -37,8 +38,8 @@ gtest:
 	$(CC) -g -isystem $(GTEST_DIR)/include -I$(GTEST_DIR) -pthread -c $(GTEST_DIR)/src/gtest-all.cc -o $(OBJDIR)/gtest-all.o
 	ar -rv $(BINDIR)/libgtest.a $(OBJDIR)/gtest-all.o
 
-# There is probably a way to do this in a patterned based way, but oh well
-# also have to make the associated bin directories...
+#There is probably a way to do this in a patterned based way, but oh well
+#also have to make the associated bin directories...
 MAKE_DIR=@mkdir -p $(@D)
 MAKE_OBJ=$(CC) $(CFLAGS) -c -o $@ $<
 $(OBJDIR)/%.o : %.cc %.h

@@ -92,8 +92,40 @@ int strncmp(const char* s1, const char* s2, size_t n) {
         ;
     return ret;
 }
-int strcasecmp(const char* s1, const char* s2);
-int strncasecmp(const char* s1, const char* s2, size_t n);
+int strcasecmp(const char* s1, const char* s2) {
+    int ret = 0;
+    do {
+        char a = *s1++;
+        char b = *s2;
+        if (a >= 'A' && a <= 'Z') {
+            a += 'a' - 'A';
+        }
+        if (b >= 'A' && b <= 'Z') {
+            b += 'a' - 'A';
+        }
+        ret = a - b;
+    } while (!ret && *s2++);
+    return ret;
+}
+int strncasecmp(const char* s1, const char* s2, size_t n) {
+    int ret = 0;
+    const char* end = s1 + n;
+    while (!ret && s1 != end) {
+        char a = *s1++;
+        char b = *s2;
+        if (a >= 'A' && a <= 'Z') {
+            a += 'a' - 'A';
+        }
+        if (b >= 'A' && b <= 'Z') {
+            b += 'a' - 'A';
+        }
+        ret = a - b;
+        if (!*s2++) {
+            break;
+        }
+    }
+    return ret;
+}
 char* strchr(const char* s, int c);
 char* strrchr(const char* s, int c);
 char* strchrnul(const char* s, int c);
