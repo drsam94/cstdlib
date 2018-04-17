@@ -10,12 +10,13 @@ char* strcpy(char* dest, const char* src);
 char* strncpy(char* dest, const char* src, size_t n);
 char* strcat(char* dest, const char* src);
 char* strncat(char* dest, const char* src, size_t n);
-// Below functions do not yet have tests written
-char* strchr(const char* s, int c);
-char* strrchr(const char* s, int c);
-char* strchrnul(const char* s, int c);
 int strcmp(const char* s1, const char* s2);
 int strncmp(const char* s1, const char* s2, size_t n);
 int strcasecmp(const char* s1, const char* s2);
 int strncasecmp(const char* s1, const char* s2, size_t n);
+char* strchr(const char* s, int c);
+char* strrchr(const char* s, int c);
+char* strchrnul(const char* s, int c);
+char* strpbrk(const char* s, const char* accept);
+char* strstr(const char* haystack, const char* needle);
 } // namespace sd

@@ -1,6 +1,11 @@
 #include "string.h"
 using std::byte;
 
+// All of these methods are intentionally implemented with the following
+// constraints:
+// 1: The code is written in non-warning ISO C++
+// 2: Each implementation uses no standard library functions
+// 3: No implementations share code or call one another
 namespace sd {
 void* memcpy(void* dest, const void* src, size_t n) {
     byte* bdest = static_cast<byte*>(dest);
@@ -126,7 +131,50 @@ int strncasecmp(const char* s1, const char* s2, size_t n) {
     }
     return ret;
 }
-char* strchr(const char* s, int c);
-char* strrchr(const char* s, int c);
-char* strchrnul(const char* s, int c);
+char* strchr(const char* s, int c) {
+    while (*s != c) {
+        if (!*s++)
+            return nullptr;
+    }
+    return const_cast<char*>(s);
+}
+char* strrchr(const char* s, int c) {
+    const char* ret = nullptr;
+    do {
+        if (*s == c) {
+            ret = s;
+        }
+    } while (*s++);
+    return const_cast<char*>(ret);
+}
+char* strchrnul(const char* s, int c) {
+    while (*s != c && *s) {
+        ++s;
+    }
+    return const_cast<char*>(s);
+}
+char* strpbrk(const char* s, const char* accept) {
+    do {
+        const char* a = accept;
+        while (*a) {
+            if (*s == *a++) {
+                return const_cast<char*>(s);
+            }
+        }
+    } while (*s++);
+    return nullptr;
+}
+char* strstr(const char* haystack, const char* needle) {
+    const char* h = haystack;
+    do {
+        const char* s = h;
+        const char* n = needle;
+        do {
+            if (!*n) {
+                return const_cast<char*>(h);
+            }
+        } while (*s++ == *n++);
+    } while (*h++);
+    return nullptr;
+}
 } // namespace sd

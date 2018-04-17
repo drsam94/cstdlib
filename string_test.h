@@ -284,4 +284,78 @@ TEST(strTest, strncasecmp3) {
     EXPECT_SIGN(::strncasecmp("$$l", "$$lLo", 3),
                 sd::strncasecmp("$$l", "$$lLo", 3));
 }
+TEST(strTest, strchr1) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strchr(hello, 'e'), sd::strchr(hello, 'e'));
+    EXPECT_EQ(::strchr(hello, '\n'), sd::strchr(hello, '\n'));
+    EXPECT_EQ(::strchr(hello, '\0'), sd::strchr(hello, '\0'));
+    EXPECT_EQ(::strchr(hello, 'z'), sd::strchr(hello, 'z'));
+
+    EXPECT_EQ(::strchr("", 'a'), sd::strchr("", 'a'));
+    EXPECT_EQ(::strchr("", '\0'), sd::strchr("", '\0'));
+}
+TEST(strTest, strrchr1) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strrchr(hello, 'e'), sd::strrchr(hello, 'e'));
+    EXPECT_EQ(::strrchr(hello, '\n'), sd::strrchr(hello, '\n'));
+    EXPECT_EQ(::strrchr(hello, '\0'), sd::strrchr(hello, '\0'));
+    EXPECT_EQ(::strrchr(hello, 'z'), sd::strrchr(hello, 'z'));
+
+    EXPECT_EQ(::strrchr("", 'a'), sd::strrchr("", 'a'));
+    EXPECT_EQ(::strrchr("", '\0'), sd::strrchr("", '\0'));
+}
+TEST(strTest, strrchr2) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strrchr(hello, 'l'), sd::strrchr(hello, 'l'));
+    const char zs[] = "ZZAZZ";
+    EXPECT_EQ(::strrchr(zs, 'Z'), sd::strrchr(zs, 'Z'));
+    const char as[] = "AAAAAAAAAAAAAAA";
+    EXPECT_EQ(::strrchr(as, 'A'), sd::strrchr(as, 'A'));
+}
+TEST(strTest, strchrnul1) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strchrnul(hello, 'e'), sd::strchrnul(hello, 'e'));
+    EXPECT_EQ(::strchrnul(hello, '\n'), sd::strchrnul(hello, '\n'));
+    EXPECT_EQ(::strchrnul(hello, '\0'), sd::strchrnul(hello, '\0'));
+    EXPECT_EQ(::strchrnul(hello, 'z'), sd::strchrnul(hello, 'z'));
+
+    EXPECT_EQ(::strchrnul("", 'a'), sd::strchrnul("", 'a'));
+    EXPECT_EQ(::strchrnul("", '\0'), sd::strchrnul("", '\0'));
+}
+TEST(strTest, strpbrk1) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strpbrk(hello, "e"), sd::strpbrk(hello, "e"));
+    EXPECT_EQ(::strpbrk(hello, "\n"), sd::strpbrk(hello, "\n"));
+    EXPECT_EQ(::strpbrk(hello, ""), sd::strpbrk(hello, ""));
+    EXPECT_EQ(::strpbrk(hello, "z"), sd::strpbrk(hello, "z"));
+
+    EXPECT_EQ(::strpbrk("", "a"), sd::strpbrk("", "a"));
+    EXPECT_EQ(::strpbrk("", ""), sd::strpbrk("", ""));
+}
+TEST(strTest, strpbrk2) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strpbrk(hello, "oW!"), sd::strpbrk(hello, "oW!"));
+    EXPECT_EQ(::strpbrk(hello, "!Wo"), sd::strpbrk(hello, "!Wo"));
+    EXPECT_EQ(::strpbrk(hello, "$%^"), sd::strpbrk(hello, "$%^"));
+    EXPECT_EQ(::strpbrk(hello, "$%^d"), sd::strpbrk(hello, "$%^d"));
+}
+TEST(strTest, strstr1) {
+    const char hello[] = "Hello, World!\n";
+    EXPECT_EQ(::strstr(hello, "e"), sd::strstr(hello, "e"));
+    EXPECT_EQ(::strstr(hello, "\n"), sd::strstr(hello, "\n"));
+    EXPECT_EQ(::strstr(hello, ""), sd::strstr(hello, ""));
+    EXPECT_EQ(::strstr(hello, "z"), sd::strstr(hello, "z"));
+
+    EXPECT_EQ(::strstr("", "a"), sd::strstr("", "a"));
+    EXPECT_EQ(::strstr("", ""), sd::strstr("", ""));
+}
+TEST(srtRest, strstr2) {
+    const char s[] = "gggaaaggggcat";
+    EXPECT_EQ(::strstr(s, "ggg"), sd::strstr(s, "ggg"));
+    EXPECT_EQ(::strstr(s, "gggg"), sd::strstr(s, "gggg"));
+    EXPECT_EQ(::strstr(s, "ggggg"), sd::strstr(s, "ggggg"));
+    EXPECT_EQ(::strstr(s, "gaaag"), sd::strstr(s, "gaaag"));
+    EXPECT_EQ(::strstr(s, "cat"), sd::strstr(s, "cat"));
+}
+
 #undef EXPECT_SIGN
