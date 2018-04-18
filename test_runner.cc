@@ -1,4 +1,5 @@
 // Barebones main for gtest
+#include "cmp_test.h"
 #include "memcpy_test.h"
 #include "string_test.h"
 #include <stdio.h>

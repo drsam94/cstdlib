@@ -19,4 +19,10 @@ char* strrchr(const char* s, int c);
 char* strchrnul(const char* s, int c);
 char* strpbrk(const char* s, const char* accept);
 char* strstr(const char* haystack, const char* needle);
+void* memchr(const void* s, int c, size_t n);
+int memcmp(const void* s1, const void* s2, size_t n);
+void* memset(void* s, int c, size_t n);
+size_t strlen(const char* s);
+size_t strspn(const char* s, const char* accept);
+size_t strcspn(const char* s, const char* reject);
 } // namespace sd

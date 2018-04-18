@@ -167,123 +167,6 @@ TEST(strTest, strcat2) {
     EXPECT_EQ(dst2, sd::strncat(dst2, "World", 0));
     EXPECT_STREQ(dst, dst2);
 }
-
-namespace {
-inline int sign(int x) {
-    if (x < 0) {
-        return -1;
-    } else if (x > 0) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-}
-
-#define EXPECT_SIGN(x, y) EXPECT_EQ(sign(x), sign(y))
-TEST(strTest, strcmp1) {
-    EXPECT_SIGN(::strcmp("Hello", "World"), sd::strcmp("Hello", "World"));
-    EXPECT_SIGN(::strcmp("Hello", "Hel"), sd::strcmp("Hello", "Hel"));
-    EXPECT_SIGN(::strcmp("Wor", "World"), sd::strcmp("Wor", "World"));
-    EXPECT_SIGN(::strcmp("abc", "abd"), sd::strcmp("abc", "abd"));
-    EXPECT_SIGN(::strcmp("", ""), sd::strcmp("", ""));
-    EXPECT_SIGN(::strcmp("", "abc"), sd::strcmp("", "abc"));
-    EXPECT_SIGN(::strcmp("abc", ""), sd::strcmp("abc", ""));
-}
-
-TEST(strTest, strncmp1) {
-    EXPECT_SIGN(::strncmp("Hello", "World", 5),
-                sd::strncmp("Hello", "World", 5));
-    EXPECT_SIGN(::strncmp("Hello", "World", 6),
-                sd::strncmp("Hello", "World", 6));
-    EXPECT_SIGN(::strncmp("Hello", "Hel", 5), sd::strncmp("Hello", "Hel", 5));
-    EXPECT_SIGN(::strncmp("Wor", "World", 5), sd::strncmp("Wor", "World", 5));
-    EXPECT_SIGN(::strncmp("abc", "abd", 3), sd::strncmp("abc", "abd", 3));
-    EXPECT_SIGN(::strncmp("", "", 0), sd::strncmp("", "", 0));
-    EXPECT_SIGN(::strncmp("", "", 1), sd::strncmp("", "", 1));
-    EXPECT_SIGN(::strncmp("", "abc", 3), sd::strncmp("", "abc", 3));
-    EXPECT_SIGN(::strncmp("abc", "", 3), sd::strncmp("abc", "", 3));
-}
-
-TEST(strTest, strncmp2) {
-    EXPECT_SIGN(::strncmp("Hello", "World", 2),
-                sd::strncmp("Hello", "World", 2));
-    EXPECT_SIGN(::strncmp("Hello", "World", 1),
-                sd::strncmp("Hello", "World", 1));
-    EXPECT_SIGN(::strncmp("Hello", "Hel", 3), sd::strncmp("Hello", "Hel", 3));
-    EXPECT_SIGN(::strncmp("Hello", "Hel", 4), sd::strncmp("Hello", "Hel", 4));
-    EXPECT_SIGN(::strncmp("Wor", "World", 3), sd::strncmp("Wor", "World", 3));
-    EXPECT_SIGN(::strncmp("Wor", "World", 4), sd::strncmp("Wor", "World", 4));
-    EXPECT_SIGN(::strncmp("abc", "abd", 2), sd::strncmp("abc", "abd", 2));
-    EXPECT_SIGN(::strncmp("", "abc", 0), sd::strncmp("", "abc", 0));
-}
-
-TEST(strTest, strcasecmp1) {
-    EXPECT_SIGN(::strcasecmp("Hello", "World"), sd::strcmp("Hello", "World"));
-    EXPECT_SIGN(::strcasecmp("Hello", "Hel"), sd::strcmp("Hello", "Hel"));
-    EXPECT_SIGN(::strcasecmp("Wor", "World"), sd::strcmp("Wor", "World"));
-    EXPECT_SIGN(::strcasecmp("abc", "abd"), sd::strcmp("abc", "abd"));
-    EXPECT_SIGN(::strcasecmp("", ""), sd::strcmp("", ""));
-    EXPECT_SIGN(::strcasecmp("", "abc"), sd::strcmp("", "abc"));
-    EXPECT_SIGN(::strcasecmp("abc", ""), sd::strcmp("abc", ""));
-}
-
-TEST(strTest, strcasecmp2) {
-    EXPECT_SIGN(::strcasecmp("HELLO", "hello"),
-                sd::strcasecmp("HELLO", "hello"));
-    EXPECT_SIGN(::strcasecmp("HeLlO", "HeL"), sd::strcasecmp("HeLlO", "HeL"));
-    EXPECT_SIGN(::strcasecmp("hEl", "hElLo"), sd::strcasecmp("hEl", "hElLo"));
-}
-
-TEST(strTest, strncasecmp1) {
-    EXPECT_SIGN(::strncasecmp("Hello", "World", 5),
-                sd::strncasecmp("Hello", "World", 5));
-    EXPECT_SIGN(::strncasecmp("Hello", "World", 6),
-                sd::strncasecmp("Hello", "World", 6));
-    EXPECT_SIGN(::strncasecmp("Hello", "Hel", 5),
-                sd::strncmp("Hello", "Hel", 5));
-    EXPECT_SIGN(::strncasecmp("Wor", "World", 5),
-                sd::strncmp("Wor", "World", 5));
-    EXPECT_SIGN(::strncasecmp("abc", "abd", 3), sd::strncmp("abc", "abd", 3));
-    EXPECT_SIGN(::strncasecmp("", "", 0), sd::strncmp("", "", 0));
-    EXPECT_SIGN(::strncasecmp("", "", 1), sd::strncmp("", "", 1));
-    EXPECT_SIGN(::strncasecmp("", "abc", 3), sd::strncmp("", "abc", 3));
-    EXPECT_SIGN(::strncasecmp("abc", "", 3), sd::strncmp("abc", "", 3));
-}
-
-TEST(strTest, strncasecmp2) {
-    EXPECT_SIGN(::strncasecmp("Hello", "World", 2),
-                sd::strncasecmp("Hello", "World", 2));
-    EXPECT_SIGN(::strncasecmp("Hello", "World", 1),
-                sd::strncasecmp("Hello", "World", 1));
-    EXPECT_SIGN(::strncasecmp("Hello", "Hel", 3),
-                sd::strncmp("Hello", "Hel", 3));
-    EXPECT_SIGN(::strncasecmp("Hello", "Hel", 4),
-                sd::strncmp("Hello", "Hel", 4));
-    EXPECT_SIGN(::strncasecmp("Wor", "World", 3),
-                sd::strncmp("Wor", "World", 3));
-    EXPECT_SIGN(::strncasecmp("abc", "abd", 2), sd::strncmp("abc", "abd", 2));
-    EXPECT_SIGN(::strncasecmp("", "abc", 0), sd::strncmp("", "abc", 0));
-}
-
-TEST(strTest, strncasecmp3) {
-    EXPECT_SIGN(::strncasecmp("HELLO", "hello", 5),
-                sd::strncasecmp("HELLO", "hello", 5));
-    EXPECT_SIGN(::strncasecmp("HeLlO", "HeL", 3),
-                sd::strncasecmp("HeLlO", "HeL", 3));
-    EXPECT_SIGN(::strncasecmp("hEl", "hElLo", 4),
-                sd::strncasecmp("hEl", "hElLo", 4));
-    EXPECT_SIGN(::strncasecmp("HeLlO", "HeL", 3),
-                sd::strncasecmp("HeLlO", "HeL", 3));
-    EXPECT_SIGN(::strncasecmp("hEl", "hElLo", 4),
-                sd::strncasecmp("hEl", "hElLo", 4));
-    EXPECT_SIGN(::strncasecmp("HELLW", "hellx", 4),
-                sd::strncasecmp("HELLW", "hellx", 4));
-    EXPECT_SIGN(::strncasecmp("HeL$O", "HeL!O", 4),
-                sd::strncasecmp("HeL$O", "HeL!O", 4));
-    EXPECT_SIGN(::strncasecmp("$$l", "$$lLo", 3),
-                sd::strncasecmp("$$l", "$$lLo", 3));
-}
 TEST(strTest, strchr1) {
     const char hello[] = "Hello, World!\n";
     EXPECT_EQ(::strchr(hello, 'e'), sd::strchr(hello, 'e'));
@@ -349,7 +232,7 @@ TEST(strTest, strstr1) {
     EXPECT_EQ(::strstr("", "a"), sd::strstr("", "a"));
     EXPECT_EQ(::strstr("", ""), sd::strstr("", ""));
 }
-TEST(srtRest, strstr2) {
+TEST(strTest, strstr2) {
     const char s[] = "gggaaaggggcat";
     EXPECT_EQ(::strstr(s, "ggg"), sd::strstr(s, "ggg"));
     EXPECT_EQ(::strstr(s, "gggg"), sd::strstr(s, "gggg"));
@@ -357,5 +240,27 @@ TEST(srtRest, strstr2) {
     EXPECT_EQ(::strstr(s, "gaaag"), sd::strstr(s, "gaaag"));
     EXPECT_EQ(::strstr(s, "cat"), sd::strstr(s, "cat"));
 }
+TEST(strTest, memchr1) {
+    const char hello[] = "Hello, World!\n";
+    const size_t N = sizeof(hello);
+    EXPECT_EQ(::memchr(hello, 'e', N), sd::memchr(hello, 'e', N));
+    EXPECT_EQ(::memchr(hello, '\n', N), sd::memchr(hello, '\n', N));
+    EXPECT_EQ(::memchr(hello, '\0', N), sd::memchr(hello, '\0', N));
+    EXPECT_EQ(::memchr(hello, 'z', N), sd::memchr(hello, 'z', N));
 
-#undef EXPECT_SIGN
+    EXPECT_EQ(::memchr("", 'a', 1), sd::memchr("", 'a', 1));
+    EXPECT_EQ(::memchr("", '\0', 1), sd::memchr("", '\0', 1));
+
+    EXPECT_EQ(::memchr(hello, 'e', 2), sd::memchr(hello, 'e', 2));
+    EXPECT_EQ(::memchr(hello, '\n', N - 2), sd::memchr(hello, '\n', N - 2));
+    EXPECT_EQ(::memchr(hello, '\0', N - 1), sd::memchr(hello, '\0', N - 1));
+    EXPECT_EQ(::memchr(hello, 'z', 0), sd::memchr(hello, 'z', 0));
+
+    EXPECT_EQ(::memchr("", 'a', 0), sd::memchr("", 'a', 0));
+    EXPECT_EQ(::memchr("", '\0', 0), sd::memchr("", '\0', 0));
+}
+TEST(strTest, strlen1) {
+    EXPECT_EQ(::strlen(""), sd::strlen(""));
+    EXPECT_EQ(::strlen("abc"), sd::strlen("abc"));
+    EXPECT_EQ(::strlen("Hello, World!\n"), sd::strlen("Hello, World!\n"));
+}

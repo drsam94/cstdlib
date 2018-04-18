@@ -86,22 +86,26 @@ char* strncat(char* dest, const char* src, size_t n) {
 }
 int strcmp(const char* s1, const char* s2) {
     int ret = 0;
-    while (!(ret = *s1++ - *s2) && *s2++)
+    const unsigned char* p1 = reinterpret_cast<const unsigned char*>(s1);
+    const unsigned char* p2 = reinterpret_cast<const unsigned char*>(s2);
+    while (!(ret = *p1++ - *p2) && *p2++)
         ;
     return ret;
 }
 int strncmp(const char* s1, const char* s2, size_t n) {
     int ret = 0;
-    const char* end = s1 + n;
-    while (s1 != end && !(ret = *s1++ - *s2) && *s2++)
+    const unsigned char* p1 = reinterpret_cast<const unsigned char*>(s1);
+    const unsigned char* p2 = reinterpret_cast<const unsigned char*>(s2);
+    const unsigned char* end = p1 + n;
+    while (p1 != end && !(ret = *p1++ - *p2) && *p2++)
         ;
     return ret;
 }
 int strcasecmp(const char* s1, const char* s2) {
     int ret = 0;
     do {
-        char a = *s1++;
-        char b = *s2;
+        unsigned char a = *s1++;
+        unsigned char b = *s2;
         if (a >= 'A' && a <= 'Z') {
             a += 'a' - 'A';
         }
@@ -116,8 +120,8 @@ int strncasecmp(const char* s1, const char* s2, size_t n) {
     int ret = 0;
     const char* end = s1 + n;
     while (!ret && s1 != end) {
-        char a = *s1++;
-        char b = *s2;
+        unsigned char a = *s1++;
+        unsigned char b = *s2;
         if (a >= 'A' && a <= 'Z') {
             a += 'a' - 'A';
         }
@@ -177,4 +181,39 @@ char* strstr(const char* haystack, const char* needle) {
     } while (*h++);
     return nullptr;
 }
+void* memchr(const void* s, int c, size_t n) {
+    const char* p = static_cast<const char*>(s);
+    for (size_t i = 0; i < n; ++i) {
+        if (*p == c) {
+            return const_cast<void*>(static_cast<const void*>(p));
+        }
+        ++p;
+    }
+    return nullptr;
+}
+int memcmp(const void* s1, const void* s2, size_t n) {
+    const unsigned char* p1 = static_cast<const unsigned char*>(s1);
+    const unsigned char* p2 = static_cast<const unsigned char*>(s2);
+    for (size_t i = 0; i < n; ++i) {
+        if (int v = *p1++ - *p2++; v) {
+            return v;
+        }
+    }
+    return 0;
+}
+void* memset(void* s, int c, size_t n) {
+    char* p = static_cast<char*>(s);
+    for (size_t i = 0; i < n; ++i) {
+        *p = c;
+    }
+    return s;
+}
+size_t strlen(const char* s) {
+    size_t len = 0;
+    while (*s++)
+        ++len;
+    return len;
+}
+size_t strspn(const char* s, const char* accept);
+size_t strcspn(const char* s, const char* reject);
 } // namespace sd
